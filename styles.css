@@ -1,0 +1,94 @@
+body {
+  top: 0;
+  left: 0;
+  background-color: aliceblue;
+}
+li {
+  text-decoration: none;
+  list-style: none;
+}
+#canvas-div {
+  width: 1200px;
+  margin: 20px auto;
+  height: 660px;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+#options-section {
+  width: 300px;
+  float: left;
+  border-right: 2px solid black;
+  height: 660px;
+  background-color: white;
+  border-radius: 20px 0 0 20px;
+}
+.row ul li img {
+  width: 30px;
+  vertical-align: -11px;
+}
+.row ul li {
+  padding: 9px;
+  width: 150px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+.title {
+  margin-left: 90px;
+  font-weight: bold;
+  font-size: 18px;
+}
+.row {
+  padding: 10px;
+}
+label {
+  cursor: pointer;
+}
+#canvas-board {
+  background-color: rgb(255, 255, 255);
+  width: 900px;
+  height: 660px;
+  border-radius: 0 20px 20px 0;
+  margin-left: 300px;
+}
+#colours {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: -45px;
+}
+#colours li {
+  width: 5px;
+  height: 5px;
+  border-radius: 20px;
+  padding: 10px;
+}
+.selected {
+  border: 2px solid rgb(0, 255, 60);
+}
+#colours li:nth-child(1) {
+  background-color: black;
+}
+#colours li:nth-child(2) {
+  background-color: red;
+}
+#colours li:nth-child(3) {
+  background-color: blue;
+}
+#colours li:nth-child(4) {
+  background-color: green;
+}
+.row button {
+  background-color: rgb(7, 0, 62);
+  color: white;
+  padding: 5px;
+  margin-left: 30px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+#canvas {
+  width: 898px;
+  height: 660px;
+}
+.active {
+  color: blue;
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painting Canvas</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div id="canvas-div">
+      <section id="options-section">
+        <div class="row">
+          <label class="title">Shapes </label>
+          <ul class="options">
+            <li class="option tool" id="rectangle">
+              <img src="./img/rec.jpeg" alt="" />
+              <span>Rectangle</span>
+            </li>
+            <li class="option tool" id="triangle">
+              <img src="./img/tri.jpg" alt="" />
+              <span>Triangle</span>
+            </li>
+            <li class="option tool" id="circle">
+              <img src="./img/cir.jpg" alt="" />
+              <span>Circle</span>
+            </li>
+            <li class="option" id="fill-color">
+              <input type="checkbox" name="fill" id="fill" />
+              <label for="fill">Fill Color</label>
+            </li>
+          </ul>
+        </div>
+        <hr />
+        <div class="row">
+          <label class="title">Tools </label>
+          <ul class="options">
+            <li class="option tool active" id="brush">
+              <span>Brush</span>
+            </li>
+            <li class="option tool" id="eraser">
+              <span>Eraser</span>
+            </li>
+            <li class="option">
+              <span>Brush Size</span>
+              <input type="range" id="brush-size" min="1" max="10" />
+            </li>
+          </ul>
+        </div>
+        <hr />
+        <div class="row">
+          <label class="title">Colors </label>
+          <ul id="colours">
+            <li class="option selected" id="black"></li>
+            <li class="option" id="red"></li>
+            <li class="option" id="blue"></li>
+            <li class="option" id="green"></li>
+          </ul>
+        </div>
+        <hr />
+        <div class="row">
+          <button id="clear-board">Clear Board</button>
+          <button id="save-board">Save Image</button>
+        </div>
+      </section>
+      <section id="canvas-board">
+        <canvas id="canvas"> </canvas>
+      </section>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>

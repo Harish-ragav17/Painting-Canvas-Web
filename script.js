@@ -1,5 +1,5 @@
 const canvas = document.querySelector("canvas");
-ctx = canvas.getContext("2d");
+context = canvas.getContext("2d");
 const btns = document.querySelectorAll(".tool");
 const fill = document.querySelector("#fill");
 const brushSize = document.querySelector("#brush-size");
@@ -13,6 +13,7 @@ let brushWidth = 5;
 let mouseStartPosX, mouseStartPosY, snapshot;
 let selectedColor = "black";
 
+
 window.addEventListener("load", () => {
   canvas.width = canvas.offsetWidth;
   canvas.height = canvas.offsetHeight;
@@ -20,32 +21,33 @@ window.addEventListener("load", () => {
 });
 
 const canvasDefaults = () => {
-  ctx.fillStyle = "white";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = selectedColor;
+  context.fillStyle = "white";
+  context.fillRect(0, 0, canvas.width, canvas.height);
+  context.fillStyle = selectedColor;
 };
 
 const startDraw = (e) => {
   isDrawing = true;
-  ctx.beginPath();
-  ctx.lineWidth = brushWidth;
+  context.beginPath();
+  context.lineWidth = brushWidth;
   mouseStartPosX = e.offsetX;
   mouseStartPosY = e.offsetY;
-  snapshot = ctx.getImageData(0, 0, canvas.width, canvas.height);
-  ctx.strokeStyle = selectedColor;
-  ctx.fillStyle = selectedColor;
+  snapshot = context.getImageData(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = selectedColor;
+  context.fillStyle = selectedColor;
 };
 
 const drawRect = (e) => {
   if (fill.checked) {
-    ctx.fillRect(
+    
+    context.fillRect(
       e.offsetX,
       e.offsetY,
       mouseStartPosX - e.offsetX,
       mouseStartPosY - e.offsetY
     );
   } else {
-    ctx.strokeRect(
+    context.strokeRect(
       e.offsetX,
       e.offsetY,
       mouseStartPosX - e.offsetX,
@@ -55,22 +57,29 @@ const drawRect = (e) => {
 };
 
 const drawCirc = (e) => {
-  ctx.beginPath();
+  context.beginPath();
   let radius = Math.sqrt(
     Math.pow(mouseStartPosX - e.offsetX, 2) +
       Math.pow(mouseStartPosY - e.offsetY, 2)
   );
-  ctx.arc(mouseStartPosX, mouseStartPosY, radius, 0, 2 * Math.PI);
-  fill.checked ? ctx.fill() : ctx.stroke();
+  context.arc(mouseStartPosX, mouseStartPosY, radius, 0, 2 * Math.PI);
+  fill.checked ? context.fill() : context.stroke();
 };
 
 const drawTri = (e) => {
-  ctx.beginPath();
-  ctx.moveTo(mouseStartPosX, mouseStartPosY);
-  ctx.lineTo(e.offsetX, e.offsetY);
-  ctx.lineTo(mouseStartPosX * 2 - e.offsetX, e.offsetY);
-  ctx.closePath();
-  fill.checked ? ctx.fill() : ctx.stroke();
+  context.beginPath();
+  context.moveTo(mouseStartPosX, mouseStartPosY);
+  context.lineTo(e.offsetX, e.offsetY);
+  context.lineTo(mouseStartPosX * 2 - e.offsetX, e.offsetY);
+  context.closePath();
+  fill.checked ? context.fill() : context.stroke();
+};
+
+const applyColor = (e) => {
+
+  if (context.isPointInPath(e.offsetX, e.offsetY)) {
+    context.fillStyle = "red";
+  }
 };
 
 const stopDrawing = () => {
@@ -87,7 +96,7 @@ btns.forEach((btn) => {
 
 colors.forEach((btn) => {
   btn.addEventListener("click", () => {
-    document.querySelector("#colours .selected").classList.remove("selected")
+    document.querySelector("#colours .selected").classList.remove("selected");
     btn.classList.add("selected");
     selectedColor = btn.id;
   });
@@ -95,11 +104,11 @@ colors.forEach((btn) => {
 
 const drawing = (e) => {
   if (isDrawing) {
-    ctx.putImageData(snapshot, 0, 0);
+    context.putImageData(snapshot, 0, 0);
     if (selectedTool == "brush" || selectedTool == "eraser") {
-      ctx.strokeStyle = selectedTool == "eraser" ? "white" : selectedColor;
-      ctx.lineTo(e.offsetX, e.offsetY);
-      ctx.stroke();
+      context.strokeStyle = selectedTool == "eraser" ? "white" : selectedColor;
+      context.lineTo(e.offsetX, e.offsetY);
+      context.stroke();
     } else if (selectedTool == "rectangle") {
       drawRect(e);
     } else if (selectedTool == "circle") {
@@ -115,12 +124,13 @@ brushSize.addEventListener("change", () => {
 });
 
 clearBoard.addEventListener("click", () =>
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  context.clearRect(0, 0, canvas.width, canvas.height)
 );
 
 savebtn.addEventListener("click", () => {
   const link = document.createElement("a");
   link.download = `${Date.now()}.jpg`;
+  canvas.toDataURL();
   link.href = canvas.toDataURL();
   link.click();
 });
@@ -128,3 +138,11 @@ savebtn.addEventListener("click", () => {
 canvas.addEventListener("mousedown", startDraw);
 canvas.addEventListener("mouseup", stopDrawing);
 canvas.addEventListener("mousemove", drawing);
+
+canvas.addEventListener("click", (e) => {
+  applyColor(e);
+});
+
+document.getElementById("color-picker").addEventListener("change", (e) => {
+  selectedColor = document.getElementById("color-picker").value;
+});
